@@ -4,47 +4,44 @@ export default {
   name: "App",
   components: {},
   data() {
-    const contacts = contactData.slice(0, 5);
-    const myArray = contacts;
+    const myArray = contactData; //todos los datos
+    const contacts = contactData.slice(0, 5); // 5primeros datos
     const myArrayToShow = [];
+    let contactId = 0;
 
     return {
+      myArray: myArray,
       contacts: contacts,
+      myArrayToShow: myArrayToShow,
+      contactId: contactId++,
     };
   },
-  computed: {},
+  computed: {
+   
+  },
   methods: {
-    getRandomInt(min, max) {
-      min = Math.ceil(min);
-      max = Math.floor(max);
-      return Math.floor(Math.random() * (max - min) + min);
+    getRandomInt() {
+      return Math.floor(Math.random() * 100) + 5;
     },
-    getRandomElem () {
-      if (myArray.length) {
-        const myRandomPos = getRandomInt(0, myArray.length - 1);
-        const myRandomElem = myArray[myRandomPos];
-        const elemIsAvailableToShow = myArrayToShow.findIndex(elem => elem === myRandomElem);
 
-        if (elemIsAvailableToShow === -1) {
-          myArrayToShow.push(myRandomElem);
-          const elemToRemoveIndex = myArray.findIndex(elem => elem === myRandomElem);
-          myArray.splice(elemToRemoveIndex, 1);
-        }
-      }
-},
+    addRandomElem() {
+      let randomcontact = this.contacts.splice(5, this.myArray.length - 1);git add .
+      this.contacts.unshift(randomcontact[0]);
+    },
 
     created() {
-      const firstFivemyArray = [];
-      for (i = 0; i < 5; i++) {
-        myArrayToShow.push(myArray.unshift());
-      }
-    },   
+      // const firstFivemyArray = [];
+      // for (i = 0; i < 5; i++) {
+      //   myArrayToShow.push(myArray.unshift());
+      // }
+    },
   },
 };
 </script>
 
 <template>
   <h1>IronContacts</h1>
+  <p>{{}}</p>
   <div>
     <table style="width: 100%">
       <thead>
@@ -57,7 +54,7 @@ export default {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in contacts" :key="item.id">
+        <tr v-for="item in contacts" :key="item.contactId">
           <td>
             <img :src="item.pictureUrl" alt="contact Image" />
           </td>
@@ -84,7 +81,7 @@ export default {
       </tbody>
     </table>
   </div>
-  <button @click="getRandomElem">Add Random Contact</button>
+  <button @click="addRandomElem">Add Random Contact</button>
 </template>
 
 <style>
